@@ -1,0 +1,14 @@
+{
+    "name": "learnd",
+    "authors": [
+        "Peter Lewis"
+    ],
+    "description": "A minimal D application.",
+    "copyright": "Copyright © 2016, Peter Lewis",
+    "license": "proprietary",
+    "dependencies": {
+        "derelict-util": "~>2.0.6",
+        "derelict-gl3": "~>1.0.18",
+        "derelict-glfw3": "~>3.1.0"
+    }
+}
