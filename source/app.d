@@ -41,14 +41,12 @@ void main()
     glfwMakeContextCurrent(window);
     
     writeln("Reloading OpenGL...");
-    //DerelictGL3.reload();
+    DerelictGL3.reload();
 
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);  
     glViewport(0, 0, width, height);
     
-    DerelictGL3.reload();
-
     Shader vertex = new Shader("graphics/shaders/vertex/vertex.glsl", GL_VERTEX_SHADER, true);
     vertex.compileShader;
     vertex.didShaderCompile();
@@ -81,7 +79,7 @@ void main()
     glBindVertexArray(vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, verts.sizeof, &verts, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, verts.length * float.sizeof, verts.ptr, GL_STATIC_DRAW);
     
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * float.sizeof, cast(GLvoid*)0);
     glEnableVertexAttribArray(0);
