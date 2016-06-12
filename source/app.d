@@ -4,6 +4,7 @@ import std.system;
 import derelict.glfw3;
 import derelict.opengl3.gl3;
 
+import init.window;
 import glslloading.shader;
 
 OS oSystem;
@@ -17,35 +18,7 @@ void main()
 {
     oSystem = os;  
 
-    writeln("Loading OpenGL 1.x...");
-    DerelictGL3.load();
-    
-    writeln("Loading GLFW3...");
-    DerelictGLFW3.load("libs/libglfw.3.dylib");
-    
-    if(!glfwInit()) {
-        return;
-    }
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL 
-    
-    GLFWwindow* window = glfwCreateWindow(640, 480, "My Title", null, null);
-    if (!window) {
-        writeln("failed to create window");
-        glfwTerminate();
-        return;
-    }
-
-    glfwMakeContextCurrent(window);
-    
-    writeln("Reloading OpenGL...");
-    DerelictGL3.reload();
-
-    int width, height;
-    glfwGetFramebufferSize(window, &width, &height);  
-    glViewport(0, 0, width, height);
+    GLFWwindow* window = Window(3, 3, 640, 480, "My Window", "libs/libglfw.3.dylib", null).initialize();
     
     Shader vertex = new Shader("graphics/shaders/vertex/vertex.glsl", GL_VERTEX_SHADER, true);
     vertex.compileShader;
