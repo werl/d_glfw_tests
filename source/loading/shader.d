@@ -1,4 +1,4 @@
-module glslloading.shader;
+module loading.shader;
 
 import derelict.opengl3.gl3;
 

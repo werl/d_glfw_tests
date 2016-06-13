@@ -5,7 +5,7 @@ import derelict.glfw3;
 import derelict.opengl3.gl3;
 
 import init.window;
-import glslloading.shader;
+import loading.shader;
 
 OS oSystem;
 GLfloat[] verts = [
