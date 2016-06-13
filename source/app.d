@@ -1,5 +1,6 @@
 import std.stdio;
 import std.system;
+import std.getopt;
 
 import derelict.glfw3;
 import derelict.opengl3.gl3;
@@ -19,17 +20,26 @@ GLuint[] indicies = [
     1, 2, 3
 ];
 
-void main()
+string vertShaderPath = "graphics/shaders/vertex/";
+string fragShaderPath = "graphics/shaders/fragment/";
+string libGLFWPath = "libs/";
+
+void main(string[] args)
 {
+    getopt(args, 
+          "vertex",   &vertShaderPath, 
+          "fragment", &fragShaderPath,
+          "glfw",     &libGLFWPath);
+
     oSystem = os;  
 
-    GLFWwindow* window = Window(3, 3, 640, 480, "My Window", "libs/libglfw.3.dylib", null).initialize();
+    GLFWwindow* window = Window(3, 3, 640, 480, "My Window", libGLFWPath ~ "libglfw.3.dylib", null).initialize();
     
-    Shader vertex = new Shader("graphics/shaders/vertex/vertex.glsl", GL_VERTEX_SHADER, true);
+    Shader vertex = new Shader(vertShaderPath ~ "vertex.glsl", GL_VERTEX_SHADER, true);
     vertex.compileShader;
     vertex.didShaderCompile();
 
-    Shader fragment = new Shader("graphics/shaders/fragment/shader.glsl", GL_FRAGMENT_SHADER, true);
+    Shader fragment = new Shader(fragShaderPath ~ "shader.glsl", GL_FRAGMENT_SHADER, true);
     fragment.compileShader;
     fragment.didShaderCompile();
 
