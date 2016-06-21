@@ -22,7 +22,7 @@ GLuint[] indicies = [
 
 string vertShaderPath = "graphics/shaders/vertex/";
 string fragShaderPath = "graphics/shaders/fragment/";
-string libGLFWPath = "libs/";
+string libGLFWPath = "lib/";
 
 void main(string[] args)
 {
