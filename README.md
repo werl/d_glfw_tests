@@ -1,5 +1,5 @@
 # d_glfw_tests
-Starting out with GLFW and OpenGL and the D language
+Starting out with GLFW, OpenGL, and the D language
 
 Follow along as I lean the basics of creating a game!
 
