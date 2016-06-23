@@ -1,5 +1,4 @@
 import std.stdio;
-import std.system;
 import std.getopt;
 
 import derelict.glfw3;
@@ -8,7 +7,6 @@ import derelict.opengl3.gl3;
 import init.window;
 import loading.shader;
 
-OS oSystem;
 GLfloat[] verts = [
      0.5f,  0.5f, 0.0f,  // Top Right
      0.5f, -0.5f, 0.0f,  // Bottom Right
@@ -31,7 +29,6 @@ void main(string[] args)
           "fragment", &fragShaderPath,
           "glfw",     &libGLFWPath);
 
-    oSystem = os;  
 
     GLFWwindow* window = Window(3, 3, 640, 480, "My Window", libGLFWPath ~ "libglfw.3.dylib", null).initialize();
     
