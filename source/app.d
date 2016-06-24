@@ -4,8 +4,11 @@ import std.getopt;
 import derelict.glfw3;
 import derelict.opengl3.gl3;
 
+import dglsl;
+
 import init.window;
 import loading.shader;
+import shaders.test;
 
 GLfloat[] verts = [
      0.5f,  0.5f, 0.0f,  // Top Right
@@ -18,44 +21,23 @@ GLuint[] indicies = [
     1, 2, 3
 ];
 
-string vertShaderPath = "graphics/shaders/vertex/";
-string fragShaderPath = "graphics/shaders/fragment/";
 string libGLFWPath = "lib/";
 
 void main(string[] args)
 {
     getopt(args, 
-          "vertex",   &vertShaderPath, 
-          "fragment", &fragShaderPath,
           "glfw",     &libGLFWPath);
 
 
     GLFWwindow* window = Window(3, 3, 640, 480, "My Window", libGLFWPath ~ "libglfw.3.dylib", null).initialize();
     
-    Shader vertex = new Shader(vertShaderPath ~ "vertex.glsl", GL_VERTEX_SHADER, true);
-    vertex.compileShader;
-    vertex.didShaderCompile();
+    auto vert = new VertShader();
+    vert.compile();
 
-    Shader fragment = new Shader(fragShaderPath ~ "shader.glsl", GL_FRAGMENT_SHADER, true);
-    fragment.compileShader;
-    fragment.didShaderCompile();
+    auto frag = new FragShader();
+    frag.compile();
 
-    GLuint program;
-    program = glCreateProgram();
-    glAttachShader(program, vertex.shaderRef);
-    glAttachShader(program, fragment.shaderRef);
-    glLinkProgram(program);
-
-    GLint success;
-    GLchar[512] infoLog;
-    glGetProgramiv(program, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(program, 512, null, infoLog.ptr);
-        writeln("Program Error");
-    }
-
-    glDeleteShader(vertex.shaderRef);
-    glDeleteShader(fragment.shaderRef);
+    auto program1 = makeProgram(vert, frag);
 
     GLuint vbo, vao, ebo;
     glGenVertexArrays(1, &vao);
@@ -83,7 +65,7 @@ void main(string[] args)
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(program);
+        glUseProgram(program1.id);
         glBindVertexArray(vao);
         //glDrawArrays(GL_TRIANGLES, 0, 3);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, cast(GLvoid*)0);
